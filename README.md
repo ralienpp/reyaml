@@ -45,42 +45,42 @@ Here is an example of a YAML file that `reyaml` can absorb without a hitch:
 
 # database settings go here; these will be used to connect to PostgreSQL
 db:
-host: localhost
-port: 60000
-db: ts_db
-user: jedi
-password: noAuthNeeded
+	host: localhost
+	port: 60000
+	db: ts_db
+	user: jedi
+	password: noAuthNeeded
 
 # stuff related to the LDAP server
 ldap:
-host: 192.168.1.7
-port: 389
-password: cronomatopeaea
-timeout: 3 # in seconds
+	host: 192.135.1.7
+	port: 389
+	password: Cxronomat0peaea
+	timeout: 3 # in seconds
 
-# the values below don't have to be quoted, but it gives one
-# psychological comfort when they have no doubts about how a
-# setting is interpreted, so there you go
-user: "cn=admin,o=Dekart"
+	# the values below don't have to be quoted, but it gives one
+	# psychological comfort when they have no doubts about how a
+	# setting is interpreted, so there you go
+	user: "cn=admin,o=Dekart"
 
 
 # RabbitMQ connection settings
 amqp:
-url: amqp://guest:guest@127.0.0.1
+	url: amqp://guest:guest@127.0.0.1
 
 
 
 log:
-# valid options: {debug, info, warning, error, critical}
-# if not specified, no logging takes place
-level: debug
+	# valid options: {debug, info, warning, error, critical}
+	# if not specified, no logging takes place
+	level: debug
 
-# full path to log file. If not specified, logging to STDOUT
-#path: taxisomatic.log 
+	# full path to log file. If not specified, logging to STDOUT
+	#path: taxisomatic.log 
 
-# this must be a valid Python log format string, reference:
-# https://docs.python.org/2/library/logging.html#logrecord-attributes 
-# If not specified, the default is `'%(asctime)-15s %(levelname)s %(message)s'`
-#format: "%(asctime)-15s %(levelname)s %(message)s"
-format: "%(asctime)-15s %(levelname)s %(filename)s %(funcName)s %(message)s"
+	# this must be a valid Python log format string, reference:
+	# https://docs.python.org/2/library/logging.html#logrecord-attributes 
+	# If not specified, the default is `'%(asctime)-15s %(levelname)s %(message)s'`
+	#format: "%(asctime)-15s %(levelname)s %(message)s"
+	format: "%(asctime)-15s %(levelname)s %(filename)s %(funcName)s %(message)s"
 ```
