@@ -1,5 +1,6 @@
 import yaml
 
+
 def load(raw):
     '''Parses a YAML string, tolerating comments and inline comments, as well as
     warning you about mixed tabs and spaces'''
@@ -33,3 +34,10 @@ def load(raw):
         lines.append(line)
 
     return yaml.load('\n'.join(lines) )
+
+
+def load_from_file(path):
+    '''Load a YAML file and return its contents as a dictionary'''
+    with open(path, 'rb') as f:
+        raw = f.read()
+        return load(raw)
