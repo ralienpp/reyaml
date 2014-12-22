@@ -1,12 +1,12 @@
 reyaml
 ======
 
-A parser of humane YAML files, that tolerates comments, inline comments, whitespace; as well as catches some basic syntax errors for you.
+A humane YAML parser that tolerates comments, inline comments, whitespace; and catches some basic syntax errors for you.
 
-The primary objective of this library is to use it for loading configuration files of a software system. It is handy to leave comments inside the config file itself, to make administration tasks easier.
+The primary objective is to load configuration files. It is handy to leave comments inside the config file itself, to make administration tasks easier.
 
 
-Here is an example of a YAML file that `reyaml` can absorb without a hitch:
+Here is a YAML file that `reyaml` can absorb without a hitch:
 
 ```
 # This is the main configuration file of the system, it is written in a
@@ -83,4 +83,38 @@ log:
 	# If not specified, the default is `'%(asctime)-15s %(levelname)s %(message)s'`
 	#format: "%(asctime)-15s %(levelname)s %(message)s"
 	format: "%(asctime)-15s %(levelname)s %(filename)s %(funcName)s %(message)s"
+```
+
+
+Examples of use
+---------------
+
+There are two functions you need: `load` parses a string, while `load_from_file` takes a file path instead. They return a dictionary.
+
+
+```
+import reyaml
+
+raw_config = """
+log:
+	# valid options: {debug, info, warning, error, critical}
+	# if not specified, no logging takes place
+	level: debug
+
+	# full path to log file. If not specified, logging to STDOUT
+	#path: taxisomatic.log 
+
+	# this must be a valid Python log format string, reference:
+	# https://docs.python.org/2/library/logging.html#logrecord-attributes 
+	# If not specified, the default is `'%(asctime)-15s %(levelname)s %(message)s'`
+	#format: "%(asctime)-15s %(levelname)s %(message)s"
+	format: "%(asctime)-15s %(levelname)s %(filename)s %(funcName)s %(message)s"
+"""
+
+config = reyaml.load(raw_config)
+print config
+>>> {'log': {'level': 'debug', 'format': '%(asctime)-15s %(levelname)s %(filename)s %(funcName)s %(message)s'}}
+
+# you can also load it from a file directly
+# config = reyaml.load_from_file('system.conf')
 ```
