@@ -5,6 +5,41 @@ A humane YAML parser that tolerates comments, inline comments, whitespace; and c
 
 The primary objective is to load configuration files. It is handy to leave comments inside the config file itself, to make administration tasks easier.
 
+Examples of use
+---------------
+
+There are two functions you need: `load` parses a string, while `load_from_file` takes a file path instead. They return a dictionary.
+
+```
+import reyaml
+
+raw_config = """
+log:
+	# valid options: {debug, info, warning, error, critical}
+	# if not specified, no logging takes place
+	level: debug
+
+	# full path to log file. If not specified, logging to STDOUT
+	#path: taxisomatic.log 
+
+	# this must be a valid Python log format string, reference:
+	# https://docs.python.org/2/library/logging.html#logrecord-attributes 
+	# If not specified, the default is `'%(asctime)-15s %(levelname)s %(message)s'`
+	#format: "%(asctime)-15s %(levelname)s %(message)s"
+	format: "%(asctime)-15s %(levelname)s %(filename)s %(funcName)s %(message)s"
+"""
+
+config = reyaml.load(raw_config)
+print config
+>>> {'log': {'level': 'debug', 'format': '%(asctime)-15s %(levelname)s %(filename)s %(funcName)s %(message)s'}}
+
+# you can also load it from a file directly
+# config = reyaml.load_from_file('system.conf')
+```
+
+
+Example configuration
+---------------------
 
 Here is a YAML file that `reyaml` can absorb without a hitch:
 
@@ -45,7 +80,7 @@ Here is a YAML file that `reyaml` can absorb without a hitch:
 
 # database settings go here; these will be used to connect to PostgreSQL
 db:
-	host: localhost
+	host: localhost # doesn't work with 127.0.0.1!!
 	port: 60000
 	db: ts_db
 	user: jedi
@@ -86,35 +121,36 @@ log:
 ```
 
 
-Examples of use
----------------
 
-There are two functions you need: `load` parses a string, while `load_from_file` takes a file path instead. They return a dictionary.
+Rationale
+---------
+
+Human errors can be roughly categorized as such:
+
+* _Slip_ - your intention is right, but your action is wrong; e.g. accidentally press another button.
+* _Mistake_ - your thought process was incorrect in the first place; e.g. you think that you can rename a file by selecting it and then pressing `Shift+Del` - the outcome is not what you wanted, even though the execution was flawless and you pressed exactly what you wanted.
+
+
+YAML simplifies life by reducing the possibility of making slips in a configuration file. Below is an excerpt of a RabbitMQ configuration, it uses a different notation. You can see that it is easy to forget a bracket or miss a closing quote. As a result, you have to invest a lot of mental effort into counting symbols, when those problems could have easily been resolved by switching to YAML and leveraging indentation to express structure.
 
 
 ```
-import reyaml
-
-raw_config = """
-log:
-	# valid options: {debug, info, warning, error, critical}
-	# if not specified, no logging takes place
-	level: debug
-
-	# full path to log file. If not specified, logging to STDOUT
-	#path: taxisomatic.log 
-
-	# this must be a valid Python log format string, reference:
-	# https://docs.python.org/2/library/logging.html#logrecord-attributes 
-	# If not specified, the default is `'%(asctime)-15s %(levelname)s %(message)s'`
-	#format: "%(asctime)-15s %(levelname)s %(message)s"
-	format: "%(asctime)-15s %(levelname)s %(filename)s %(funcName)s %(message)s"
-"""
-
-config = reyaml.load(raw_config)
-print config
->>> {'log': {'level': 'debug', 'format': '%(asctime)-15s %(levelname)s %(filename)s %(funcName)s %(message)s'}}
-
-# you can also load it from a file directly
-# config = reyaml.load_from_file('system.conf')
+...
+[
+ {rabbit,
+  [
+   %% To listen on a specific interface, provide a tuple of {IpAddress, Port}.
+   %% For example, to listen only on localhost for both IPv4 and IPv6:
+   %% 
+   {tcp_listeners, [{"127.0.0.1", 5672},
+                    {"::1",       5672}]},
+...
 ```
+
+`Reyaml` takes that one step further and augments YAML by adding some additional features, here are a few:
+
+- `host: localhost # doesn't work with 127.0.0.1!!` - inline comment
+- tab indentation
+- catch mixed tabs and spaces
+- tell you about `#` when it is not clear whether this is a comment or an anchor, e.g. `https://docs.python.org/2/library/logging.html#logrecord-attributes`
+- fail by making explicit remarks about what happened, instead of silently dropping `#logrecord-attributes` in the string above and moving on.
