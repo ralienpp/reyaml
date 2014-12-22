@@ -147,10 +147,14 @@ YAML simplifies life by reducing the possibility of making slips in a configurat
 ...
 ```
 
+Added benefits
+==============
+
 `Reyaml` takes that one step further and augments YAML by adding some additional features, here are a few:
 
+- allow whitespace, i.e. empty lines that separate sections logically
 - `host: localhost # doesn't work with 127.0.0.1!!` - inline comment
 - tab indentation
 - catch mixed tabs and spaces
 - tell you about `#` when it is not clear whether this is a comment or an anchor, e.g. `https://docs.python.org/2/library/logging.html#logrecord-attributes`
-- fail by making explicit remarks about what happened, instead of silently dropping `#logrecord-attributes` in the string above and moving on.
+- fail by making explicit remarks about what happened, instead of silently dropping `#logrecord-attributes` in the string above and moving on, leaving you clueless when you see that your system is doing something other than what is written in the configuration.
