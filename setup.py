@@ -1,9 +1,5 @@
 from distutils.core import setup
 
-SHORT_DESC = '''A YAML reader that relaxes the syntax by allowing comments, inline comments,
-and blank lines, among other things.'''
-
-
 LONG_DESC = '''Extends the syntax of YAML files to accomodate things that an administrator
 appreciates - comments inside a configuration file. Applies some additional sanity checks
 to the data and fails verbosely, providing a detailed error message.'''
@@ -12,7 +8,6 @@ setup(
     name = 'reyaml',
     packages = ['reyaml'], # this must be the same as the name above
     version = '0.2',
-    description=SHORT_DESC,
     long_description=LONG_DESC,
     description = 'Reader of humane YAML files',
     author = 'Alex Railean',
