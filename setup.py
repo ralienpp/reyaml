@@ -11,14 +11,14 @@ to the data and fails verbosely, providing a detailed error message.'''
 setup(
   name = 'reyaml',
   packages = ['reyaml'], # this must be the same as the name above
-  version = '0.1',
+  version = '0.2',
   description=SHORT_DESC,
   long_description=LONG_DESC,
   description = 'Reader of humane YAML files',
   author = 'Alex Railean',
   author_email = 'ralienpp@gmail.com',
   url = 'https://github.com/ralienpp/reyaml',
-  download_url = 'https://github.com/ralienpp/reyaml/tarball/0.1',
+  download_url = 'https://github.com/ralienpp/reyaml/tarball/0.2',
   keywords = ['yaml', 'parser', 'configuration', 'config'],
   license = 'BSD'
   classifiers = [
