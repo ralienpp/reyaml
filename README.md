@@ -5,6 +5,8 @@ A humane YAML parser that tolerates comments, inline comments, whitespace; and c
 
 The primary objective is to load configuration files. It is handy to leave comments inside the config file itself, to make administration tasks easier.
 
+Setting it up is as easy as `pip install reyaml`.
+
 Examples of use
 ---------------
 
