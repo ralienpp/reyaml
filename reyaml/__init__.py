@@ -38,6 +38,6 @@ def load(raw):
 
 def load_from_file(path):
     '''Load a YAML file and return its contents as a dictionary'''
-    with open(path, 'rb') as f:
+    with open(path, 'r') as f:
         raw = f.read()
         return load(raw)
