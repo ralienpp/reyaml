@@ -33,7 +33,7 @@ def load(raw):
                     raise SyntaxError(error)
         lines.append(line)
 
-    return yaml.load('\n'.join(lines) )
+    return yaml.load('\n'.join(lines), Loader=yaml.SafeLoader)
 
 
 def load_from_file(path):
